@@ -1,31 +1,20 @@
-import Layout from '../boostrap/layout'
+import dashboard from './dashboard'
+import component from './component'
+import config from './config'
+import other from './other'
+
 export const routes = [
   {
     path: '/',
     redirect: '/dashboard'
   },
-  {
-    path: '/dashboard',
-    component: Layout,
-    children: [
-      {
-        path: '/',
-        name: 'dashboard',
-        component: () =>
-          import(/* webpackChunkName: "dashboard" */ '@/pages/dashboard'),
-        meta: {
-          title: '控制台',
-          icon: 'home-4-line'
-        }
-      }
-    ]
-  },
+  dashboard,
+  component,
+  config,
+  other,
   {
     path: '/login',
     name: 'login',
-    component: () => import(/* webpackChunkName: "login" */ '@/pages/login'),
-    meta: {
-      index: 1
-    }
+    component: () => import(/* webpackChunkName: "login" */ '@/pages/login')
   }
 ]

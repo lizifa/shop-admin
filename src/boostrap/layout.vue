@@ -11,27 +11,27 @@
         <li
           v-for="(item, index) in menus"
           :key="index"
-          @click="chengeMenu(item, index)"
-          :class="{ active: item.active }"
+          @click="routeJump(menus, item, index)"
+          :class="{ active: item.meta.active }"
         >
           <i class="el-icon-chat-line-round" data="el-icon"></i>
-          {{ item.text }}
+          {{ item.meta.title }}
         </li>
       </ul>
       <ul class="next-menu">
         <li
-          v-for="(item, index) in menus[activeInex].children"
+          v-for="(item, index) in routes"
           :key="index"
-          :class="{ active: item.active }"
-          @click="chengeRoute(item, index)"
+          :class="{ active: item.meta.active }"
+          @click="routeJump(routes, item, index)"
         >
           <i class="el-icon-chat-line-round" data="el-icon"></i>
-          {{ menus[activeInex].text }}-{{ item.text }}
+          {{ item.meta.name }}
         </li>
       </ul>
     </div>
     <div class="content-wrapper">
-      <div class="cotent-header">
+      <div class="content-header">
         <div class="navigation">
           <i
             :class="[
@@ -52,14 +52,16 @@
             </li>
             <li>
               <div class="user">
-                <div class="avatar"></div>
+                <div class="avatar">
+                  <img src="../assets/images/15918_100.gif" alt="" />
+                </div>
                 小书包
                 <i class="el-icon-arrow-down"></i>
               </div>
             </li>
           </ul>
         </div>
-        <div class="breadcrumb">
+        <div class="breadcrumb" v-if="false">
           <el-breadcrumb separator="/">
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
@@ -68,41 +70,71 @@
           </el-breadcrumb>
         </div>
       </div>
-      <div class="content-main"></div>
+      <div class="content-main"><router-view /></div>
     </div>
   </div>
 </template>
 
 <script>
 import { ref, reactive } from 'vue'
-import { list } from '@/utils'
+import { useRouter } from 'vue-router'
+
+function getChildRouter() {
+  let { currentRoute } = useRouter()
+  return currentRoute.value.matched[0].children.slice()
+}
+
+function getCurRouter() {
+  let router = useRouter()
+  let allRoutes = router.getRoutes().filter(route => route.meta.topMenu)
+  allRoutes = allRoutes.map(route => {
+    if (route.meta.name === router.currentRoute.value.path.split('/')[1]) {
+      route.meta.active = true
+      route.children.map(child => {
+        if (child.path === router.currentRoute.value.path.split('/')[2]) {
+          child.meta.active = true
+        } else {
+          child.meta.active = false
+        }
+        return child
+      })
+    } else {
+      route.meta.active = false
+    }
+    return route
+  })
+  return allRoutes
+}
+
 export default {
   name: 'App',
+  props: {
+    scroll: {
+      type: Function,
+      defaule: () => {}
+    }
+  },
   setup() {
     let isCollapse = ref(true)
-    let toggle = function() {
+    let toggle = () => {
       isCollapse.value = !isCollapse.value
     }
 
-    let menus = reactive(list)
+    let router = useRouter()
+    let routes = reactive(getChildRouter())
+    let menus = reactive(getCurRouter())
+    let routeJump = (arr, item) => {
+      arr.map(v => (v.meta.active = false))
+      item.meta.active = true
+      router.push({ path: item.path })
+    }
 
-    let activeInex = ref(0)
-    let chengeMenu = function(item, index) {
-      menus[activeInex.value].active = false
-      item.active = true
-      activeInex.value = index
-    }
-    let chengeRoute = function(item) {
-      menus[activeInex.value].children.map(cur => (cur.active = false))
-      item.active = true
-    }
     return {
       isCollapse,
       toggle,
       menus,
-      chengeMenu,
-      activeInex,
-      chengeRoute
+      routeJump,
+      routes
     }
   }
 }
@@ -139,6 +171,7 @@ export default {
       transition: all ease 0.4s;
       &.active {
         background: #1890ff;
+        cursor: pointer;
       }
       [data^='el-icon'] {
         margin-bottom: 5px;
@@ -167,6 +200,7 @@ export default {
       transition: all ease 0.4s;
       &.active {
         background: rgba(24, 144, 255, 0.1) !important;
+        cursor: pointer;
       }
       [data^='el-icon'] {
         margin-right: 5px;
@@ -178,11 +212,12 @@ export default {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    // color: @black;
     .breadcrumb {
       display: flex;
       align-items: center;
-      height: 60px;
-      margin-left: 15px;
+      padding: 15px;
+      background: #f0f2f5;
       .el-breadcrumb {
         flex-grow: 1;
       }
@@ -209,7 +244,7 @@ export default {
       justify-content: flex-end;
       li {
         display: inline-block;
-        padding: 0 20px;
+        padding: 0 10px;
         cursor: pointer;
       }
       .avatar {
@@ -217,8 +252,10 @@ export default {
         height: 32px;
         border-radius: 50px;
         overflow: hidden;
-        background: red;
         margin-right: 5px;
+        img {
+          width: 100%;
+        }
       }
       .user {
         display: inline-flex;
@@ -230,10 +267,12 @@ export default {
     .content-main {
       flex-grow: 1;
       background: #f0f2f5;
-    }
-    .cotent-header {
       overflow: hidden;
-      border-bottom: 1px solid #eaeefb;
+      position: relative;
+    }
+    .content-header {
+      overflow: hidden;
+      box-sizing: border-box;
     }
   }
   .page-sidebar-expanded {
