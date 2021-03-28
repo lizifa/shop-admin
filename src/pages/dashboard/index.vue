@@ -10,7 +10,6 @@ export default {
   name: 'HelloWorld',
   setup() {
     let href = ref(location.href)
-    console.log(1)
     return {
       href
     }

@@ -42,7 +42,9 @@
           ></i>
           <ul class="inner-navigation">
             <li>
-              <i class="el-icon-bell"></i>
+              <el-badge is-dot
+                ><i class="el-icon-bell" @click="openDrawer"></i
+              ></el-badge>
             </li>
             <li>
               <i class="el-icon-refresh"></i>
@@ -51,27 +53,41 @@
               <i class="el-icon-search"></i>
             </li>
             <li>
-              <div class="user">
-                <div class="avatar">
-                  <img src="../assets/images/15918_100.gif" alt="" />
-                </div>
-                小书包
-                <i class="el-icon-arrow-down"></i>
-              </div>
+              <el-dropdown>
+                <span class="el-dropdown-link">
+                  <div class="user">
+                    <div class="avatar">
+                      <img src="../assets/images/15918_100.gif" alt="" />
+                    </div>
+                    小书包
+                  </div>
+                  <i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <template #dropdown>
+                  <el-dropdown-menu>
+                    <el-dropdown-item>黄金糕</el-dropdown-item>
+                    <el-dropdown-item>狮子头</el-dropdown-item>
+                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                    <el-dropdown-item disabled>双皮奶</el-dropdown-item>
+                    <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
             </li>
           </ul>
-        </div>
-        <div class="breadcrumb" v-if="false">
-          <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
-            <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-            <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-          </el-breadcrumb>
         </div>
       </div>
       <div class="content-main"><router-view /></div>
     </div>
+    <el-drawer
+      title="我是标题"
+      v-model="drawer"
+      :direction="direction"
+      :before-close="handleClose"
+      destroy-on-close
+    >
+      <span>我来啦!</span>
+    </el-drawer>
   </div>
 </template>
 
@@ -101,6 +117,15 @@ export default {
       router.push({ path: item.path })
     }
 
+    let drawer = ref(false)
+    let direction = ref('rtl')
+    let openDrawer = () => {
+      drawer.value = !drawer.value
+    }
+    let handleClose = done => {
+      done()
+    }
+
     onMounted(() => {
       let cache = localStorage.getItem('collapse')
       if (cache) {
@@ -114,7 +139,11 @@ export default {
       toggle,
       menus,
       routeJump,
-      routes
+      routes,
+      drawer,
+      direction,
+      handleClose,
+      openDrawer
     }
   }
 }
@@ -261,6 +290,11 @@ export default {
   }
   .page-sidebar-collapsed {
     width: @fix-bar-width;
+  }
+  .el-dropdown-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>

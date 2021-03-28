@@ -104,9 +104,14 @@
         }
       }
     </style>
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
   </head>
   <body style="margin: 0;padding: 0;">
-    <div id="app">
+    <div id="app" v-cloak>
       <div class="first-loading-wrp">
         <div class="loading-wrp">
           <span class="dot dot-spin">
