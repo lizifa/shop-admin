@@ -1,106 +1,24 @@
-export let list = [
-  {
-    text: '控制台',
-    active: true,
-    children: [
-      {
-        text: '组件1',
-        active: true
-      },
-      {
-        text: '组件1',
-        active: false
-      },
-      {
-        text: '组件1',
-        active: false
-      },
-      {
-        text: '组件1',
-        active: false
-      },
-      {
-        text: '组件1',
-        active: false
-      }
-    ]
-  },
-  {
-    text: '组件',
-    active: false,
-    children: [
-      {
-        text: '组件1',
-        active: true
-      },
-      {
-        text: '组件1',
-        active: false
-      },
-      {
-        text: '组件1',
-        active: false
-      },
-      {
-        text: '组件1',
-        active: false
-      },
-      {
-        text: '组件1',
-        active: false
-      }
-    ]
-  },
-  {
-    text: '其他',
-    active: false,
-    children: [
-      {
-        text: '组件1',
-        active: true
-      },
-      {
-        text: '组件1',
-        active: false
-      },
-      {
-        text: '组件1',
-        active: false
-      },
-      {
-        text: '组件1',
-        active: false
-      },
-      {
-        text: '组件1',
-        active: false
-      }
-    ]
-  },
-  {
-    text: '配置',
-    active: false,
-    children: [
-      {
-        text: '组件1',
-        active: true
-      },
-      {
-        text: '组件1',
-        active: false
-      },
-      {
-        text: '组件1',
-        active: false
-      },
-      {
-        text: '组件1',
-        active: false
-      },
-      {
-        text: '组件1',
-        active: false
-      }
-    ]
-  }
-]
+export function getChildRouter(router) {
+  return router.currentRoute.value.matched[0].children.slice()
+}
+
+export function getCurRouter(router) {
+  let allRoutes = router.getRoutes().filter(route => route.meta.topMenu)
+  allRoutes = allRoutes.map(route => {
+    if (route.meta.name === router.currentRoute.value.path.split('/')[1]) {
+      route.meta.active = true
+      route.children.map(child => {
+        if (child.path === router.currentRoute.value.path.split('/')[2]) {
+          child.meta.active = true
+        } else {
+          child.meta.active = false
+        }
+        return child
+      })
+    } else {
+      route.meta.active = false
+    }
+    return route
+  })
+  return allRoutes
+}

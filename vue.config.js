@@ -15,20 +15,10 @@ module.exports = {
         lessOptions: {
           modifyVars: {
             // 或者可以通过 less 文件覆盖（文件路径为绝对路径）
-            hack: `true; @import "/src/less/global1.less";`
+            hack: `true; @import "/src/less/global.less";`
           }
         }
       }
-    }
-  },
-  pluginOptions: {
-    'style-resources-loader': {
-      preProcessor: 'less',
-      patterns: [
-        //这个是加上自己的路径，
-        //注意：试过不能使用别名路径
-        path.resolve(__dirname, '/src/less/global.less')
-      ]
     }
   }
 }

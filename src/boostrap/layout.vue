@@ -76,58 +76,38 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-
-function getChildRouter() {
-  let { currentRoute } = useRouter()
-  return currentRoute.value.matched[0].children.slice()
-}
-
-function getCurRouter() {
-  let router = useRouter()
-  let allRoutes = router.getRoutes().filter(route => route.meta.topMenu)
-  allRoutes = allRoutes.map(route => {
-    if (route.meta.name === router.currentRoute.value.path.split('/')[1]) {
-      route.meta.active = true
-      route.children.map(child => {
-        if (child.path === router.currentRoute.value.path.split('/')[2]) {
-          child.meta.active = true
-        } else {
-          child.meta.active = false
-        }
-        return child
-      })
-    } else {
-      route.meta.active = false
-    }
-    return route
-  })
-  return allRoutes
-}
+import { getChildRouter, getCurRouter } from '../utils'
 
 export default {
-  name: 'App',
-  props: {
-    scroll: {
-      type: Function,
-      defaule: () => {}
-    }
-  },
+  name: 'layout',
   setup() {
     let isCollapse = ref(true)
     let toggle = () => {
       isCollapse.value = !isCollapse.value
+      localStorage.setItem(
+        'collapse',
+        JSON.stringify({ collapse: isCollapse.value })
+      )
     }
 
     let router = useRouter()
-    let routes = reactive(getChildRouter())
-    let menus = reactive(getCurRouter())
+    let routes = reactive(getChildRouter(router))
+    let menus = reactive(getCurRouter(router))
     let routeJump = (arr, item) => {
       arr.map(v => (v.meta.active = false))
       item.meta.active = true
       router.push({ path: item.path })
     }
+
+    onMounted(() => {
+      let cache = localStorage.getItem('collapse')
+      if (cache) {
+        cache = JSON.parse(localStorage.getItem('collapse'))
+        isCollapse.value = cache.collapse
+      }
+    })
 
     return {
       isCollapse,
@@ -143,6 +123,7 @@ export default {
 #layout {
   display: flex;
   width: 100%;
+  color: @black;
   .sidebar-wrapper {
     transition: all ease 0.2s;
     overflow: hidden;
@@ -155,11 +136,11 @@ export default {
     list-style: none;
     margin: 0;
     padding: 0;
-    flex-basis: 65px;
-    min-width: 65px;
+    flex-basis: @fix-bar-width;
+    min-width: @fix-bar-width;
     li {
       width: 100%;
-      height: 65px;
+      height: @fix-bar-width;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -225,7 +206,7 @@ export default {
     .navigation {
       display: flex;
       align-items: center;
-      height: 60px;
+      height: @header-height;
       justify-content: space-between;
       [data^='el-icon-d-arrow'] {
         cursor: pointer;
@@ -276,10 +257,10 @@ export default {
     }
   }
   .page-sidebar-expanded {
-    width: 300px;
+    width: @sider-bar-width;
   }
   .page-sidebar-collapsed {
-    width: 65px;
+    width: @fix-bar-width;
   }
 }
 </style>
