@@ -34,9 +34,7 @@
       <div class="content-header">
         <div class="navigation">
           <i
-            :class="[
-              `${isCollapse ? 'el-icon-d-arrow-left' : 'el-icon-d-arrow-right'}`
-            ]"
+            :class="[`${isCollapse ? 'el-icon-s-fold' : 'el-icon-s-unfold'}`]"
             data="el-icon-d-arrow"
             @click="toggle"
           ></i>
