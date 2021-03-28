@@ -239,6 +239,7 @@ export default {
         cursor: pointer;
         margin-right: 10px;
         margin-left: 10px;
+        color: rgba(0, 0, 0, 0.4);
       }
     }
     .inner-navigation {
