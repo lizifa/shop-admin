@@ -10,10 +10,10 @@ export default {
     active: false,
     topMenu: true
   },
-  redirect: '/other',
+  redirect: '/other/wrong',
   children: [
     {
-      path: '',
+      path: 'wrong',
       meta: {
         reddot: true,
         name: '错误页面',

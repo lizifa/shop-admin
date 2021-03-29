@@ -10,10 +10,10 @@ export default {
     active: false,
     topMenu: true
   },
-  redirect: '/dashboard',
+  redirect: '/dashboard/index',
   children: [
     {
-      path: '',
+      path: 'index',
       meta: {
         reddot: true,
         name: '控制台',

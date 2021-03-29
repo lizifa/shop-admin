@@ -10,10 +10,10 @@ export default {
     active: false,
     topMenu: true
   },
-  redirect: '/component',
+  redirect: '/component/poster',
   children: [
     {
-      path: '',
+      path: 'poster',
       meta: {
         reddot: true,
         name: '绘制海报',
@@ -26,7 +26,7 @@ export default {
         )
     },
     {
-      path: 'index2',
+      path: 'card',
       meta: {
         reddot: false,
         name: '绘制卡片',

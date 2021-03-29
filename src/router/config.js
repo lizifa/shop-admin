@@ -10,10 +10,10 @@ export default {
     active: false,
     topMenu: true
   },
-  redirect: '/config',
+  redirect: '/config/personal',
   children: [
     {
-      path: '',
+      path: 'personal',
       meta: {
         reddot: false,
         name: '个人中心',
