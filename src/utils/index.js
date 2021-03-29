@@ -1,9 +1,14 @@
+/**
+ * 获取当前路由的子路由
+ * @param {*} router对象
+ * @returns
+ */
 export function getChildRouter(router) {
   return router.currentRoute.value.matched[0].children.slice()
 }
 
 export function getCurRouter(router) {
-  let allRoutes = router.getRoutes().filter(route => route.meta.topMenu)
+  let allRoutes = router.getRoutes().filter(route => route.meta.topMenu) || []
   allRoutes = allRoutes.map(route => {
     if (route.meta.name === router.currentRoute.value.path.split('/')[1]) {
       route.meta.active = true

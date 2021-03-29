@@ -10,13 +10,13 @@ export default {
     active: false,
     topMenu: true
   },
-  redirect: '/dashboard/index',
+  redirect: '/dashboard',
   children: [
     {
-      path: 'index',
+      path: '',
       meta: {
         reddot: true,
-        name: '组件一',
+        name: '控制台',
         icon: '',
         active: false
       },
@@ -26,10 +26,10 @@ export default {
         )
     },
     {
-      path: 'index2',
+      path: 'export',
       meta: {
         reddot: true,
-        name: '组件二',
+        name: '数据导出',
         icon: '',
         active: false
       },

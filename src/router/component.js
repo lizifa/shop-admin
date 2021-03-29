@@ -10,13 +10,13 @@ export default {
     active: false,
     topMenu: true
   },
-  redirect: '/component/index',
+  redirect: '/component',
   children: [
     {
-      path: 'index',
+      path: '',
       meta: {
         reddot: true,
-        name: '组件一',
+        name: '绘制海报',
         icon: '',
         active: false
       },
@@ -28,8 +28,21 @@ export default {
     {
       path: 'index2',
       meta: {
-        reddot: true,
-        name: '组件二',
+        reddot: false,
+        name: '绘制卡片',
+        icon: '',
+        active: false
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+        )
+    },
+    {
+      path: 'h5',
+      meta: {
+        reddot: false,
+        name: '生成投放页面',
         icon: '',
         active: false
       },

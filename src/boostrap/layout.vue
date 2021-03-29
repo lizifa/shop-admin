@@ -9,9 +9,9 @@
     >
       <ul class="menu">
         <li
-          v-for="(item, index) in menus"
+          v-for="(item, index) in menus.list"
           :key="index"
-          @click="routeJump(menus, item, index)"
+          @click="routeJump(menus, item, 'next')"
           :class="{ active: item.meta.active }"
         >
           <i class="el-icon-chat-line-round" data="el-icon"></i>
@@ -20,10 +20,10 @@
       </ul>
       <ul class="next-menu">
         <li
-          v-for="(item, index) in routes"
+          v-for="(item, index) in routes.list"
           :key="index"
           :class="{ active: item.meta.active }"
-          @click="routeJump(routes, item, index)"
+          @click="routeJump(routes, item)"
         >
           <i class="el-icon-chat-line-round" data="el-icon"></i>
           {{ item.meta.name }}
@@ -40,7 +40,7 @@
           ></i>
           <ul class="inner-navigation">
             <li>
-              <el-badge is-dot
+              <el-badge is-dot type="danger"
                 ><i class="el-icon-bell" @click="openDrawer"></i
               ></el-badge>
             </li>
@@ -107,12 +107,20 @@ export default {
     }
 
     let router = useRouter()
-    let routes = reactive(getChildRouter(router))
-    let menus = reactive(getCurRouter(router))
-    let routeJump = (arr, item) => {
-      arr.map(v => (v.meta.active = false))
+    let routes = reactive({
+      list: getChildRouter(router)
+    })
+    let menus = reactive({
+      list: getCurRouter(router)
+    })
+    let routeJump = (data, item, type) => {
+      data.list.map(v => (v.meta.active = false))
       item.meta.active = true
       router.push({ path: item.path })
+      if (type) {
+        item.children.map((v, i) => (v.meta.active = !i ? true : false))
+        routes.list = item.children
+      }
     }
 
     let drawer = ref(false)
@@ -210,8 +218,16 @@ export default {
         background: rgba(24, 144, 255, 0.1) !important;
         cursor: pointer;
       }
+      &:hover {
+        background: rgba(24, 144, 255, 0.1) !important;
+        cursor: pointer;
+      }
       [data^='el-icon'] {
         margin-right: 5px;
+      }
+      .el-badge {
+        display: block;
+        flex-grow: 1;
       }
     }
   }

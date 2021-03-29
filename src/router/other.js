@@ -10,13 +10,13 @@ export default {
     active: false,
     topMenu: true
   },
-  redirect: '/other/index',
+  redirect: '/other',
   children: [
     {
-      path: 'index',
+      path: '',
       meta: {
         reddot: true,
-        name: '组件一',
+        name: '错误页面',
         icon: '',
         active: false
       },
@@ -26,10 +26,10 @@ export default {
         )
     },
     {
-      path: 'index2',
+      path: '404',
       meta: {
         reddot: true,
-        name: '组件二',
+        name: '404页面',
         icon: '',
         active: false
       },

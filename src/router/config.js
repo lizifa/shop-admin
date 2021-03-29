@@ -10,13 +10,13 @@ export default {
     active: false,
     topMenu: true
   },
-  redirect: '/config/index',
+  redirect: '/config',
   children: [
     {
-      path: 'index',
+      path: '',
       meta: {
-        reddot: true,
-        name: '组件一',
+        reddot: false,
+        name: '个人中心',
         icon: '',
         active: false
       },
@@ -26,10 +26,62 @@ export default {
         )
     },
     {
-      path: 'index2',
+      path: 'user',
       meta: {
         reddot: true,
-        name: '组件二',
+        name: '用户管理',
+        icon: '',
+        active: false
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+        )
+    },
+    {
+      path: 'role',
+      meta: {
+        reddot: true,
+        name: '角色管理',
+        icon: '',
+        active: false
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+        )
+    },
+    {
+      path: 'department',
+      meta: {
+        reddot: true,
+        name: '部门管理',
+        icon: '',
+        active: false
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+        )
+    },
+    {
+      path: 'menu',
+      meta: {
+        reddot: true,
+        name: '菜单管理',
+        icon: '',
+        active: false
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+        )
+    },
+    {
+      path: 'log',
+      meta: {
+        reddot: true,
+        name: '日志管理',
         icon: '',
         active: false
       },
