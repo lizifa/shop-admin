@@ -1,7 +1,7 @@
 import dashboard from './dashboard'
 import component from './component'
 import config from './config'
-import other from './other'
+import goods from './goods'
 
 export const routes = [
   {
@@ -9,9 +9,9 @@ export const routes = [
     redirect: '/dashboard'
   },
   dashboard,
+  goods,
   component,
   config,
-  other,
   {
     path: '/login',
     name: 'login',

@@ -1,22 +1,22 @@
 import Layout from '../boostrap/layout'
 export default {
-  path: '/other',
+  path: '/goods',
   component: Layout,
   meta: {
     reddot: true,
-    name: 'other',
-    title: '其他',
+    name: 'goods',
+    title: '商品',
     icon: '',
     active: false,
     topMenu: true
   },
-  redirect: '/other/wrong',
+  redirect: '/goods/index',
   children: [
     {
-      path: 'wrong',
+      path: 'index',
       meta: {
         reddot: true,
-        name: '错误页面',
+        name: '商品管理',
         icon: '',
         active: false
       },
@@ -29,7 +29,7 @@ export default {
       path: '404',
       meta: {
         reddot: true,
-        name: '404页面',
+        name: '物流管理',
         icon: '',
         active: false
       },

@@ -89,6 +89,32 @@ export default {
         import(
           /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
         )
+    },
+    {
+      path: 'error',
+      meta: {
+        reddot: true,
+        name: '错误页面',
+        icon: '',
+        active: false
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+        )
+    },
+    {
+      path: '404',
+      meta: {
+        reddot: true,
+        name: '404页面',
+        icon: '',
+        active: false
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+        )
     }
   ]
 }
