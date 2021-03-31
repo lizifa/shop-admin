@@ -1,15 +1,24 @@
 <template>
-  <div class="hello">
-    <h1>{{ href }}</h1>
-  </div>
+  <h1>
+    {{ href }}
+  </h1>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { watch, ref } from 'vue'
+import { useRoute } from 'vue-router'
+
 export default {
-  name: 'HelloWorld',
+  name: 'VabTabs',
   setup() {
     let href = ref(location.href)
+    let route = useRoute()
+    watch(
+      () => route.path,
+      () => {
+        href.value = location.href
+      }
+    )
     return {
       href
     }

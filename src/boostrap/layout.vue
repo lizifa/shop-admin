@@ -11,7 +11,7 @@
         <li
           v-for="(item, index) in menus.list"
           :key="index"
-          @click="routeJump(menus, item, 'next')"
+          @click="routeJump(menus, item)"
           :class="{ active: item.meta.active }"
         >
           <i class="el-icon-chat-line-round" data="el-icon"></i>
@@ -74,6 +74,7 @@
             </li>
           </ul>
         </div>
+        <tabComponent />
       </div>
       <div class="content-main"><router-view /></div>
     </div>
@@ -90,12 +91,16 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { getChildRouter, getCurRouter } from '../utils'
-
+import tabComponent from '../components/tab'
+import { useRoute } from 'vue-router'
 export default {
   name: 'layout',
+  components: {
+    tabComponent
+  },
   setup() {
     let isCollapse = ref(true)
     let toggle = () => {
@@ -113,14 +118,10 @@ export default {
     let menus = reactive({
       list: getCurRouter(router)
     })
-    let routeJump = (data, item, type) => {
+    let routeJump = (data, item) => {
       data.list.map(v => (v.meta.active = false))
       item.meta.active = true
       router.push({ path: item.path })
-      if (type) {
-        item.children.map((v, i) => (v.meta.active = !i ? true : false))
-        routes.list = item.children
-      }
     }
 
     let drawer = ref(false)
@@ -131,6 +132,16 @@ export default {
     let handleClose = done => {
       done()
     }
+
+    let route = useRoute()
+    watch(
+      () => route.path,
+      () => {
+        let item = menus.list.find(v => v.meta.active)
+        item.children.map((v, i) => (v.meta.active = !i ? true : false))
+        routes.list = item.children
+      }
+    )
 
     onMounted(() => {
       let cache = localStorage.getItem('collapse')
