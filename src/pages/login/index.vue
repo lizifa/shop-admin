@@ -64,10 +64,13 @@ export default {
     })
 
     let submitForm = () => {
+      let { query } = router.currentRoute.value
       let { validate } = unref(loginRef)
       validate(valid => {
         if (valid) {
-          router.push({ path: '/' })
+          router.replace({
+            path: query.redirect ? decodeURIComponent(query.redirect) : '/'
+          })
         } else {
           console.log('error submit!!')
           return false

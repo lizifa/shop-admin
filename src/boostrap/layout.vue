@@ -138,7 +138,7 @@ export default {
       () => route.path,
       () => {
         let item = menus.list.find(v => v.meta.active)
-        item.children.map((v, i) => (v.meta.active = !i ? true : false))
+        // item.children.map((v, i) => (v.meta.active = !i ? true : false))
         routes.list = item.children
       }
     )
