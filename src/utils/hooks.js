@@ -1,3 +1,5 @@
+import { ref } from 'vue'
+
 /**
   获取元素的大小及其相对于视口的位置，等价于 Element.getBoundingClientRect。
   width 宽度	number
@@ -8,7 +10,7 @@
   bottom	底部与视图窗口左上角的距离	number
  */
 
-import { Ref, unref } from 'vue'
+import { unref } from 'vue'
 
 function isWindow(val) {
   return val === window
@@ -43,4 +45,16 @@ export const useRect = elementRef => {
     width: 0,
     height: 0
   }
+}
+
+export function useCollapse(bool) {
+  let isCollapse = ref(bool)
+  let setCollapse = function(newVal) {
+    isCollapse.value = newVal
+    localStorage.setItem(
+      'collapse',
+      JSON.stringify({ collapse: isCollapse.value })
+    )
+  }
+  return [isCollapse, setCollapse]
 }

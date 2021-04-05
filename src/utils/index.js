@@ -1,3 +1,4 @@
+import { routes } from '../router/routes'
 /**
  * 获取当前路由的子路由
  * @param {*} router对象
@@ -7,23 +8,29 @@ export function getChildRouter(router) {
   return router.currentRoute.value.matched[0].children.slice()
 }
 
-export function getCurRouter(router) {
-  let allRoutes = router.getRoutes().filter(route => route.meta.topMenu) || []
-  allRoutes = allRoutes.map(route => {
-    if (route.meta.name === router.currentRoute.value.path.split('/')[1]) {
-      route.meta.active = true
-      route.children.map(child => {
-        if (child.path === router.currentRoute.value.path.split('/')[2]) {
-          child.meta.active = true
-        } else {
-          child.meta.active = false
-        }
-        return child
-      })
-    } else {
-      route.meta.active = false
-    }
-    return route
-  })
-  return allRoutes
+export function getCurRouter() {
+  return routes.filter(v => v.meta && v.meta.topMenu)
+}
+
+export const hasClass = function(obj, cls) {
+  return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'))
+}
+
+export const addClass = function(obj, cls) {
+  if (!hasClass(obj, cls)) obj.className += ' ' + cls
+}
+
+export const removeClass = function(obj, cls) {
+  if (hasClass(obj, cls)) {
+    const reg = new RegExp('(\\s|^)' + cls + '(\\s|$)')
+    obj.className = obj.className.replace(reg, ' ')
+  }
+}
+
+export const toggleClass = function(obj, cls) {
+  if (hasClass(obj, cls)) {
+    removeClass(obj, cls)
+  } else {
+    addClass(obj, cls)
+  }
 }

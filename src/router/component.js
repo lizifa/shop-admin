@@ -13,7 +13,7 @@ export default {
   redirect: '/component/poster',
   children: [
     {
-      path: 'poster',
+      path: '/component/poster',
       meta: {
         reddot: true,
         name: '绘制海报',
@@ -22,11 +22,11 @@ export default {
       },
       component: () =>
         import(
-          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+          /* webpackChunkName: "componentpost" */ '@/pages/dashboard/index.vue'
         )
     },
     {
-      path: 'card',
+      path: '/component/card',
       meta: {
         reddot: false,
         name: '绘制卡片',
@@ -35,11 +35,11 @@ export default {
       },
       component: () =>
         import(
-          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+          /* webpackChunkName: "componentcard" */ '@/pages/dashboard/index.vue'
         )
     },
     {
-      path: 'h5',
+      path: '/component/h5',
       meta: {
         reddot: false,
         name: '生成投放页面',
@@ -48,7 +48,7 @@ export default {
       },
       component: () =>
         import(
-          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+          /* webpackChunkName: "componenth5" */ '@/pages/dashboard/index.vue'
         )
     }
   ]

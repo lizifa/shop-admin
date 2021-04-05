@@ -7,26 +7,63 @@
         }`
       ]"
     >
-      <ul class="menu">
+      <ul class="top-menu">
         <li
           v-for="(item, index) in menus.list"
           :key="index"
-          @click="routeJump(menus, item)"
-          :class="{ active: item.meta.active }"
+          @click="routeJump(item)"
+          :class="{ active: route.fullPath.includes(item.meta.name) }"
         >
           <i class="el-icon-chat-line-round" data="el-icon"></i>
           {{ item.meta.title }}
         </li>
       </ul>
-      <ul class="next-menu">
+      <ul class="second-menu">
         <li
           v-for="(item, index) in routes.list"
           :key="index"
-          :class="{ active: item.meta.active }"
-          @click="routeJump(routes, item)"
+          :class="{
+            active: route.path === item.path && !item.children
+          }"
         >
-          <i class="el-icon-chat-line-round" data="el-icon"></i>
-          {{ item.meta.name }}
+          <template v-if="!item.children">
+            <div class="next-title" @click="routeJump(item)">
+              <i class="el-icon-chat-line-round" data="el-icon"></i>
+              {{ item.meta.name }}
+              <i
+                class="el-icon-arrow-down"
+                v-if="item.children && item.children.length > 0"
+              ></i>
+            </div>
+          </template>
+          <template v-else>
+            <div class="next-title" @click="toggleMenu(item, $event)">
+              <i class="el-icon-chat-line-round" data="el-icon"></i>
+              {{ item.meta.name }}
+              <i
+                :class="[
+                  `el-icon-arrow-down ${item.meta.active ? 'rotate' : ''}`
+                ]"
+                v-if="item.children && item.children.length > 0"
+              ></i>
+            </div>
+            <ol
+              :class="[`third-menu ${item.meta.active ? 'active' : ''}`]"
+              v-if="item.children && item.children.length > 0"
+            >
+              <li
+                v-for="(item, index) in item.children"
+                :key="index"
+                @click="routeJump(item)"
+                :class="{
+                  active: route.path.includes(item.path)
+                }"
+              >
+                <i class="el-icon-chat-line-round" data="el-icon"></i
+                >{{ item.meta.name }}
+              </li>
+            </ol>
+          </template>
         </li>
       </ul>
     </div>
@@ -96,19 +133,17 @@ import { useRouter } from 'vue-router'
 import { getChildRouter, getCurRouter } from '../utils'
 import tabComponent from '../components/tab'
 import { useRoute } from 'vue-router'
+import { useCollapse } from '../utils/hooks'
+
 export default {
   name: 'layout',
   components: {
     tabComponent
   },
   setup() {
-    let isCollapse = ref(true)
+    let [isCollapse, setCollapse] = useCollapse(true)
     let toggle = () => {
-      isCollapse.value = !isCollapse.value
-      localStorage.setItem(
-        'collapse',
-        JSON.stringify({ collapse: isCollapse.value })
-      )
+      setCollapse(!isCollapse.value)
     }
 
     let router = useRouter()
@@ -118,12 +153,15 @@ export default {
     let menus = reactive({
       list: getCurRouter(router)
     })
-    let routeJump = (data, item) => {
-      data.list.map(v => (v.meta.active = false))
-      item.meta.active = true
+    let routeJump = item => {
       router.push({ path: item.path })
     }
-
+    let toggleMenu = item => {
+      // let target = e.target
+      // let next = target.parentNode.children[1]
+      item.meta.active = !item.meta.active
+      // next.style.maxHeight = `${next.offsetHeight}px`
+    }
     let drawer = ref(false)
     let direction = ref('rtl')
     let openDrawer = () => {
@@ -137,9 +175,9 @@ export default {
     watch(
       () => route.path,
       () => {
-        let item = menus.list.find(v => v.meta.active)
-        // item.children.map((v, i) => (v.meta.active = !i ? true : false))
-        routes.list = item.children
+        let pathArr = router.currentRoute.value.path.split('/')
+        let item = menus.list.find(v => v.path === '/' + pathArr[1])
+        item.children && (routes.list = item.children)
       }
     )
 
@@ -160,7 +198,9 @@ export default {
       drawer,
       direction,
       handleClose,
-      openDrawer
+      openDrawer,
+      route,
+      toggleMenu
     }
   }
 }
@@ -176,7 +216,7 @@ export default {
     display: flex;
     flex-direction: inherit;
   }
-  .menu {
+  .top-menu {
     height: 100vh;
     background: linear-gradient(90deg, #282c34, #000);
     list-style: none;
@@ -206,7 +246,7 @@ export default {
       }
     }
   }
-  .next-menu {
+  .second-menu {
     height: 100vh;
     box-sizing: border-box;
     flex-basis: 300px;
@@ -217,14 +257,83 @@ export default {
     list-style: none;
     padding: 0;
     li {
-      height: 50px;
       cursor: pointer;
-      padding: 0 10px;
+      font-size: 14px;
+      transition: all ease 0.4s;
+      display: flex;
+      flex-direction: column;
+      > .next-title {
+        display: block;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0 10px;
+        position: relative;
+        .el-icon-arrow-down {
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          height: 26px;
+          width: 26px;
+          margin-top: -13px;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          transition: all ease 0.4s;
+        }
+        .rotate {
+          transform: rotate(180deg);
+        }
+      }
+      &.active {
+        background: rgba(24, 144, 255, 0.1) !important;
+        cursor: pointer;
+        .el-icon-arrow-down {
+          transform: rotate(180deg);
+        }
+      }
+      // &:hover {
+      //   background: rgba(24, 144, 255, 0.1) !important;
+      //   cursor: pointer;
+      // }
+      [data^='el-icon'] {
+        margin-right: 5px;
+      }
+      .el-badge {
+        display: block;
+        flex-grow: 1;
+      }
+    }
+  }
+  .third-menu {
+    box-sizing: border-box;
+    overflow: hidden;
+    flex-grow: 1;
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    background: #fff;
+    // transform: scaleY(0);
+    transition: all ease 0.1s;
+    transform-origin: 0% 0%;
+    max-height: 0;
+    &.active {
+      max-height: unset;
+    }
+    li {
+      cursor: pointer;
+      font-size: 14px;
+      transition: all ease 0.4s;
+      display: flex;
+      height: 50px;
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      font-size: 14px;
-      transition: all ease 0.4s;
+      padding: 0 10px;
+      flex-direction: unset;
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), border 0s,
+        color 0.1s, font-size 0s;
       &.active {
         background: rgba(24, 144, 255, 0.1) !important;
         cursor: pointer;
@@ -242,12 +351,10 @@ export default {
       }
     }
   }
-
   .content-wrapper {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    // color: @black;
     .breadcrumb {
       display: flex;
       align-items: center;

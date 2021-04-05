@@ -13,7 +13,7 @@ export default {
   redirect: '/dashboard/index',
   children: [
     {
-      path: 'index',
+      path: '/dashboard/index',
       meta: {
         reddot: true,
         name: '控制台',
@@ -22,20 +22,48 @@ export default {
       },
       component: () =>
         import(
-          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+          /* webpackChunkName: "dashboardindex" */ '@/pages/dashboard/index.vue'
         )
     },
     {
-      path: 'export',
+      path: '/dashboard/export',
       meta: {
         reddot: true,
         name: '数据导出',
         icon: '',
         active: false
       },
+      children: [
+        {
+          path: '/dashboard/index/a',
+          meta: {
+            reddot: true,
+            name: '测试数据a',
+            icon: '',
+            active: false
+          },
+          component: () =>
+            import(
+              /* webpackChunkName: "dashboardindex" */ '@/pages/dashboard/index.vue'
+            )
+        },
+        {
+          path: '/dashboard/index/b',
+          meta: {
+            reddot: true,
+            name: '测试数据b',
+            icon: '',
+            active: false
+          },
+          component: () =>
+            import(
+              /* webpackChunkName: "dashboardindex" */ '@/pages/dashboard/index.vue'
+            )
+        }
+      ],
       component: () =>
         import(
-          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+          /* webpackChunkName: "dashboardexport" */ '@/pages/dashboard/index.vue'
         )
     }
   ]

@@ -13,7 +13,7 @@ export default {
   redirect: '/config/personal',
   children: [
     {
-      path: 'personal',
+      path: '/config/personal',
       meta: {
         reddot: false,
         name: '个人中心',
@@ -22,11 +22,11 @@ export default {
       },
       component: () =>
         import(
-          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+          /* webpackChunkName: "configpersonal" */ '@/pages/dashboard/index.vue'
         )
     },
     {
-      path: 'user',
+      path: '/config/user',
       meta: {
         reddot: true,
         name: '用户管理',
@@ -35,11 +35,11 @@ export default {
       },
       component: () =>
         import(
-          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+          /* webpackChunkName: "configuser" */ '@/pages/dashboard/index.vue'
         )
     },
     {
-      path: 'role',
+      path: '/config/role',
       meta: {
         reddot: true,
         name: '角色管理',
@@ -48,11 +48,11 @@ export default {
       },
       component: () =>
         import(
-          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+          /* webpackChunkName: "configrole" */ '@/pages/dashboard/index.vue'
         )
     },
     {
-      path: 'department',
+      path: '/config/department',
       meta: {
         reddot: true,
         name: '部门管理',
@@ -61,11 +61,11 @@ export default {
       },
       component: () =>
         import(
-          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+          /* webpackChunkName: "configdepartment" */ '@/pages/dashboard/index.vue'
         )
     },
     {
-      path: 'menu',
+      path: '/config/menu',
       meta: {
         reddot: true,
         name: '菜单管理',
@@ -74,11 +74,11 @@ export default {
       },
       component: () =>
         import(
-          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+          /* webpackChunkName: "configmenu" */ '@/pages/dashboard/index.vue'
         )
     },
     {
-      path: 'log',
+      path: '/config/log',
       meta: {
         reddot: true,
         name: '日志管理',
@@ -87,7 +87,7 @@ export default {
       },
       component: () =>
         import(
-          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+          /* webpackChunkName: "configlog" */ '@/pages/dashboard/index.vue'
         )
     }
   ]

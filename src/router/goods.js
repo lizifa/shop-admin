@@ -13,7 +13,7 @@ export default {
   redirect: '/goods/index',
   children: [
     {
-      path: 'index',
+      path: '/goods/index',
       meta: {
         reddot: true,
         name: '商品管理',
@@ -22,20 +22,7 @@ export default {
       },
       component: () =>
         import(
-          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
-        )
-    },
-    {
-      path: '404',
-      meta: {
-        reddot: true,
-        name: '物流管理',
-        icon: '',
-        active: false
-      },
-      component: () =>
-        import(
-          /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+          /* webpackChunkName: "goodsindex" */ '@/pages/dashboard/index.vue'
         )
     }
   ]
