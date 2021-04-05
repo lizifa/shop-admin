@@ -314,12 +314,11 @@ export default {
     list-style: none;
     padding: 0;
     background: #fff;
-    // transform: scaleY(0);
     transition: all ease 0.1s;
     transform-origin: 0% 0%;
-    max-height: 0;
+    max-height: unset;
     &.active {
-      max-height: unset;
+      max-height: 0;
     }
     li {
       cursor: pointer;

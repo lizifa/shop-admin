@@ -6,122 +6,79 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title>商城后台</title>
-    <style>
-      .first-loading-wrp {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 90vh;
-        min-height: 90vh;
-      }
-
-      .first-loading-wrp > h1 {
-        font-size: 24px;
-        font-weight: bolder;
-      }
-
-      .first-loading-wrp .loading-wrp {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 98px;
-      }
-
-      .dot {
-        position: relative;
-        box-sizing: border-box;
-        display: inline-block;
-        width: 64px;
-        height: 64px;
-        font-size: 64px;
-        transform: rotate(45deg);
-        animation: antRotate 1.2s infinite linear;
-      }
-
-      .dot i {
-        position: absolute;
-        display: block;
-        width: 28px;
-        height: 28px;
-        background-color: #1890ff;
-        border-radius: 100%;
-        opacity: 0.3;
-        transform: scale(0.75);
-        transform-origin: 50% 50%;
-        animation: antSpinMove 1s infinite linear alternate;
-      }
-
-      .dot i:nth-child(1) {
-        top: 0;
-        left: 0;
-      }
-
-      .dot i:nth-child(2) {
-        top: 0;
-        right: 0;
-        -webkit-animation-delay: 0.4s;
-        animation-delay: 0.4s;
-      }
-
-      .dot i:nth-child(3) {
-        right: 0;
-        bottom: 0;
-        -webkit-animation-delay: 0.8s;
-        animation-delay: 0.8s;
-      }
-
-      .dot i:nth-child(4) {
-        bottom: 0;
-        left: 0;
-        -webkit-animation-delay: 1.2s;
-        animation-delay: 1.2s;
-      }
-
-      @keyframes antRotate {
-        to {
-          -webkit-transform: rotate(405deg);
-          transform: rotate(405deg);
-        }
-      }
-
-      @-webkit-keyframes antRotate {
-        to {
-          -webkit-transform: rotate(405deg);
-          transform: rotate(405deg);
-        }
-      }
-
-      @keyframes antSpinMove {
-        to {
-          opacity: 1;
-        }
-      }
-
-      @-webkit-keyframes antSpinMove {
-        to {
-          opacity: 1;
-        }
-      }
-    </style>
-    <style>
-      [v-cloak] {
-        display: none;
-      }
-    </style>
   </head>
   <body style="margin: 0;padding: 0;">
     <div id="app" v-cloak>
-      <div class="first-loading-wrp">
-        <div class="loading-wrp">
-          <span class="dot dot-spin">
-            <i></i>
-            <i></i>
-            <i></i>
-            <i></i>
-          </span>
+      <style>
+        [v-cloak] {
+          display: none;
+        }
+      </style>
+      <style>
+        .next-box .loading {
+          height: 15px;
+          margin: 0 auto;
+          margin-top: 100px;
+          display: inline-block;
+        }
+        .next-box .loading span {
+          display: inline-block;
+          width: 15px;
+          height: 100%;
+          margin-right: 5px;
+          border-radius: 50%;
+          background: lightgreen;
+          -webkit-animation: load 1.04s ease infinite;
+        }
+        .loading span:last-child {
+          margin-right: 0px;
+        }
+        @-webkit-keyframes load {
+          0% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+          }
+        }
+        .next-box .loading span:nth-child(1) {
+          -webkit-animation-delay: 0.13s;
+        }
+        .next-box .loading span:nth-child(2) {
+          -webkit-animation-delay: 0.26s;
+        }
+        .next-box .loading span:nth-child(3) {
+          -webkit-animation-delay: 0.39s;
+        }
+        .next-box .loading span:nth-child(4) {
+          -webkit-animation-delay: 0.52s;
+        }
+        .next-box .loading span:nth-child(5) {
+          -webkit-animation-delay: 0.65s;
+        }
+        .next-box p {
+          text-align: center;
+          font-size: 16px;
+          margin: 0;
+          line-height: 2.5;
+        }
+        .next-box {
+          text-align: center;
+          position: fixed;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      </style>
+      <div class="next-box">
+        <div class="loading">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-        <h1>小书包</h1>
+        <p>做一条有理想的咸鱼</p>
       </div>
     </div>
   </body>
