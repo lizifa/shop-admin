@@ -29,7 +29,7 @@
           <template v-if="!item.children">
             <div class="next-title" @click="routeJump(item)">
               <i class="el-icon-chat-line-round" data="el-icon"></i>
-              {{ item.meta.name }}
+              {{ item.meta.title }}
               <i
                 class="el-icon-arrow-down"
                 v-if="item.children && item.children.length > 0"
@@ -39,7 +39,7 @@
           <template v-else>
             <div class="next-title" @click="toggleMenu(item, $event)">
               <i class="el-icon-chat-line-round" data="el-icon"></i>
-              {{ item.meta.name }}
+              {{ item.meta.title }}
               <i
                 :class="[
                   `el-icon-arrow-down ${item.meta.active ? 'rotate' : ''}`
@@ -60,7 +60,7 @@
                 }"
               >
                 <i class="el-icon-chat-line-round" data="el-icon"></i
-                >{{ item.meta.name }}
+                >{{ item.meta.title }}
               </li>
             </ol>
           </template>
@@ -129,10 +129,9 @@
 
 <script>
 import { ref, reactive, onMounted, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { getChildRouter, getCurRouter } from '../utils'
 import tabComponent from '../components/tab'
-import { useRoute } from 'vue-router'
 import { useCollapse } from '../utils/hooks'
 
 export default {

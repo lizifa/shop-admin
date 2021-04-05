@@ -16,7 +16,7 @@ export default {
       path: '/goods/index',
       meta: {
         reddot: true,
-        name: '商品管理',
+        title: '商品管理',
         icon: '',
         active: false
       },

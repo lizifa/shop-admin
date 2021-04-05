@@ -16,7 +16,7 @@ export default {
       path: '/config/personal',
       meta: {
         reddot: false,
-        name: '个人中心',
+        title: '个人中心',
         icon: '',
         active: false
       },
@@ -29,7 +29,7 @@ export default {
       path: '/config/user',
       meta: {
         reddot: true,
-        name: '用户管理',
+        title: '用户管理',
         icon: '',
         active: false
       },
@@ -42,7 +42,7 @@ export default {
       path: '/config/role',
       meta: {
         reddot: true,
-        name: '角色管理',
+        title: '角色管理',
         icon: '',
         active: false
       },
@@ -55,7 +55,7 @@ export default {
       path: '/config/department',
       meta: {
         reddot: true,
-        name: '部门管理',
+        title: '部门管理',
         icon: '',
         active: false
       },
@@ -68,7 +68,7 @@ export default {
       path: '/config/menu',
       meta: {
         reddot: true,
-        name: '菜单管理',
+        title: '菜单管理',
         icon: '',
         active: false
       },
@@ -81,7 +81,7 @@ export default {
       path: '/config/log',
       meta: {
         reddot: true,
-        name: '日志管理',
+        title: '日志管理',
         icon: '',
         active: false
       },

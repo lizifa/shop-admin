@@ -16,7 +16,7 @@ export default {
       path: '/dashboard/index',
       meta: {
         reddot: true,
-        name: '控制台',
+        title: '控制台',
         icon: '',
         active: false
       },
@@ -29,7 +29,7 @@ export default {
       path: '/dashboard/export',
       meta: {
         reddot: true,
-        name: '数据导出',
+        title: '数据导出',
         icon: '',
         active: false
       },
@@ -38,7 +38,7 @@ export default {
           path: '/dashboard/index/a',
           meta: {
             reddot: true,
-            name: '测试数据a',
+            title: '测试数据a',
             icon: '',
             active: false
           },
@@ -51,7 +51,7 @@ export default {
           path: '/dashboard/index/b',
           meta: {
             reddot: true,
-            name: '测试数据b',
+            title: '测试数据b',
             icon: '',
             active: false
           },

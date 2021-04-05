@@ -1,10 +1,10 @@
 import { createStore } from 'vuex'
 
-import tagsBar from './modules/tagsBar'
+import tag from './modules/tag'
 import auth from './modules/auth'
 export default createStore({
   modules: {
-    tagsBar,
+    tag,
     auth
   }
 })
