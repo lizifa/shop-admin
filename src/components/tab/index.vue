@@ -4,12 +4,18 @@
       v-for="(item, index) in visitedRoutes"
       :key="item.fullPath"
       :closable="!!index"
-      :class="[`${item.path === route.path ? 'el-tag-active' : ''}`]"
+      :class="[
+        `${
+          item.path === route.path || item.redirect === route.path
+            ? 'el-tag-active'
+            : ''
+        }`
+      ]"
       @click="onTabClick(item)"
       @close="onTabClose(index)"
     >
       <i class="el-icon-chat-line-round" data="el-icon"></i>
-      {{ item.meta.title }}
+      {{ item.meta && (item.meta.title || item.meta.name) }}
     </el-tag>
   </div>
 </template>
@@ -31,8 +37,11 @@ export default {
       router.push({ path: data.path })
     }
     let onTabClose = data => {
-      console.log(data, 'close')
+      store.commit('DELETE_TAG', data)
+      let item = visitedRoutes.value[visitedRoutes.value.length - 1]
+      router.push({ path: item.path })
     }
+
     return {
       visitedRoutes,
       route,

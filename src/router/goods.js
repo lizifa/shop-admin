@@ -24,6 +24,58 @@ export default {
         import(
           /* webpackChunkName: "goodsindex" */ '@/pages/dashboard/index.vue'
         )
+    },
+    {
+      path: '/goods/swiper',
+      meta: {
+        reddot: true,
+        title: '轮播图配置',
+        icon: '',
+        active: false
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "goodsindex" */ '@/pages/dashboard/index.vue'
+        )
+    },
+    {
+      path: '/goods/hot',
+      meta: {
+        reddot: true,
+        title: '热销商品配置',
+        icon: '',
+        active: false
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "goodsindex" */ '@/pages/dashboard/index.vue'
+        )
+    },
+    {
+      path: '/goods/new',
+      meta: {
+        reddot: true,
+        title: '新品上线配置',
+        icon: '',
+        active: false
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "goodsindex" */ '@/pages/dashboard/index.vue'
+        )
+    },
+    {
+      path: '/goods/recommend',
+      meta: {
+        reddot: true,
+        title: '为你推荐配置',
+        icon: '',
+        active: false
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "goodsindex" */ '@/pages/dashboard/index.vue'
+        )
     }
   ]
 }

@@ -133,6 +133,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { getChildRouter, getCurRouter } from '../utils'
 import tabComponent from '../components/tab'
 import { useCollapse } from '../utils/hooks'
+import { useStore } from 'vuex'
 
 export default {
   name: 'layout',
@@ -140,6 +141,7 @@ export default {
     tabComponent
   },
   setup() {
+    let store = useStore()
     let [isCollapse, setCollapse] = useCollapse(true)
     let toggle = () => {
       setCollapse(!isCollapse.value)
@@ -156,10 +158,7 @@ export default {
       router.push({ path: item.path })
     }
     let toggleMenu = item => {
-      // let target = e.target
-      // let next = target.parentNode.children[1]
       item.meta.active = !item.meta.active
-      // next.style.maxHeight = `${next.offsetHeight}px`
     }
     let drawer = ref(false)
     let direction = ref('rtl')
@@ -176,7 +175,8 @@ export default {
       () => {
         let pathArr = router.currentRoute.value.path.split('/')
         let item = menus.list.find(v => v.path === '/' + pathArr[1])
-        item.children && (routes.list = item.children)
+        item && item.children && (routes.list = item.children)
+        store.commit('COMMIT_TAG', router.currentRoute.value)
       }
     )
 
@@ -186,6 +186,7 @@ export default {
         cache = JSON.parse(localStorage.getItem('collapse'))
         isCollapse.value = cache.collapse
       }
+      store.commit('COMMIT_TAG', router.currentRoute.value)
     })
 
     return {
