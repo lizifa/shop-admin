@@ -137,6 +137,7 @@ import tabComponent from '@/components/tab'
 import { useCollapse } from '@/utils/hooks'
 import { useStore } from 'vuex'
 import { DROPDOWNLIST } from '@/utils/constant'
+import { localRemove } from '@/utils'
 
 export default {
   name: 'layout',
@@ -186,6 +187,7 @@ export default {
     let command = command => {
       switch (command) {
         case 'logout':
+          localRemove('token')
           localStorage.setItem('LOGOUT', Date.now())
           router.replace({ path: '/login' })
           break

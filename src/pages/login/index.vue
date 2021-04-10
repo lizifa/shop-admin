@@ -52,6 +52,7 @@
 <script>
 import { reactive, ref, unref } from 'vue'
 import { useRouter } from 'vue-router'
+import { localSet } from '@/utils'
 
 export default {
   name: 'login',
@@ -68,6 +69,7 @@ export default {
       let { validate } = unref(loginRef)
       validate(valid => {
         if (valid) {
+          localSet('token', ruleForm.userName)
           router.replace({
             path: query.redirect ? decodeURIComponent(query.redirect) : '/'
           })

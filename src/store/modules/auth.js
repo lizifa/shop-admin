@@ -1,6 +1,8 @@
+import { localGet } from '@/utils'
+
 export default {
   state: () => ({
-    token: '小书包'
+    token: localGet('token')
   }),
   mutations: {},
   actions: {},
