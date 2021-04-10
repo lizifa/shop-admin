@@ -88,7 +88,7 @@
               <i class="el-icon-search"></i>
             </li>
             <li>
-              <el-dropdown>
+              <el-dropdown @command="command">
                 <span class="el-dropdown-link">
                   <div class="user">
                     <div class="avatar">
@@ -100,11 +100,13 @@
                 </span>
                 <template #dropdown>
                   <el-dropdown-menu>
-                    <el-dropdown-item>黄金糕</el-dropdown-item>
-                    <el-dropdown-item>狮子头</el-dropdown-item>
-                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                    <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-                    <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+                    <el-dropdown-item
+                      v-for="item in dropdownList"
+                      :key="item.action"
+                      :command="item.action"
+                      :disabled="item.disabled"
+                      >{{ item.title }}</el-dropdown-item
+                    >
                   </el-dropdown-menu>
                 </template>
               </el-dropdown>
@@ -128,12 +130,13 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted, watch } from 'vue'
+import { ref, reactive, onMounted, watch, readonly } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getChildRouter, getCurRouter } from '../utils'
-import tabComponent from '../components/tab'
-import { useCollapse } from '../utils/hooks'
+import { getChildRouter, getCurRouter } from '@/utils'
+import tabComponent from '@/components/tab'
+import { useCollapse } from '@/utils/hooks'
 import { useStore } from 'vuex'
+import { DROPDOWNLIST } from '@/utils/constant'
 
 export default {
   name: 'layout',
@@ -180,6 +183,16 @@ export default {
       }
     )
 
+    let command = command => {
+      switch (command) {
+        case 'logout':
+          localStorage.setItem('LOGOUT', Date.now())
+          router.replace({ path: '/login' })
+          break
+      }
+    }
+
+    let dropdownList = readonly(reactive(DROPDOWNLIST))
     onMounted(() => {
       let cache = localStorage.getItem('collapse')
       if (cache) {
@@ -200,7 +213,9 @@ export default {
       handleClose,
       openDrawer,
       route,
-      toggleMenu
+      toggleMenu,
+      command,
+      dropdownList
     }
   }
 }

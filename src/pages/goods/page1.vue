@@ -108,10 +108,10 @@ import { reactive, ref, toRefs, onMounted, onBeforeUnmount } from 'vue'
 import WangEditor from 'wangeditor'
 import { ElMessage } from 'element-plus'
 import { useRoute } from 'vue-router'
-import { localGet, uploadImgServer, uploadImgsServer } from '@/utils'
+import { localGet } from '@/utils'
 import ScrollView from '@/components/scroll-view'
 export default {
-  name: 'AddGood',
+  name: 'addGoods',
   components: {
     ScrollView
   },
@@ -121,7 +121,7 @@ export default {
     const route = useRoute()
     const { id } = route.query
     const state = reactive({
-      uploadImgServer,
+      aaa: '',
       token: localGet('token') || '',
       id: id,
       defaultCate: '',
@@ -176,7 +176,7 @@ export default {
           }
         }
       }
-      instance.config.uploadImgServer = uploadImgsServer
+      instance.config.uploadImgServer = ''
       Object.assign(instance.config, {
         onchange() {
           console.log('change')

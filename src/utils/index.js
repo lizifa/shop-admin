@@ -52,15 +52,91 @@ export function localRemove(key) {
   window.localStorage.removeItem(key)
 }
 
-// 判断内容是否含有表情字符，现有数据库不支持。
 export function hasEmoji(str = '') {
   const reg = /[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g
   return str.match(reg) && str.match(reg).length
 }
 
-// 单张图片上传
-export const uploadImgServer =
-  'http://backend-api-02.newbee.ltd/manage-api/v1/upload/file'
-// 多张图片上传
-export const uploadImgsServer =
-  'http://backend-api-02.newbee.ltd/manage-api/v1/upload/files'
+/**
+ * 获取对象的指定key值
+ * eg:
+ *  var obj = {
+ *      a:1,
+ *      b:2,
+ *      c:{
+ *          d:3,
+ *          e:[
+ *              1,2,3
+ *          ],
+ *          f:[
+ *              {
+ *                  1:2
+ *              }
+ *          ]
+ *      }
+ *  };
+ *
+ *  console.log(
+ *      getVal(obj, 'a'),
+ *      getVal(obj, 'c.d'),
+ *      getVal(obj, 'c.e.1'),
+ *      getVal(obj, 'c.f.0.1'),
+ *      getVal(obj, 'c.f.f', 'haha'),
+ *      obj
+ *  )
+ * @param {Object|Array} target
+ * @param {string} query
+ * @param {any} defaultValue
+ */
+export function getVal(obj, query, defaultValue) {
+  if (obj === null || !(typeof obj === 'object')) {
+    let realType = obj === null ? 'null' : typeof obj
+    console.error(
+      `[getVal]: parameter obj's type should be 'object', but it is ${realType}`
+    )
+
+    return defaultValue
+  }
+  if (typeof query !== 'string') {
+    throw new Error(
+      `[getVal]: parameter query's should be string, but it is ${typeof query}`
+    )
+  }
+  const keys = query.split('.')
+  let valObj = obj
+  for (let i = 0, len = keys.length; valObj && i < len; i++) {
+    valObj = valObj[keys[i]]
+  }
+  if (!valObj) {
+    return defaultValue
+  } else {
+    return valObj
+  }
+}
+
+/**
+ * 生成随机数
+ */
+export function randomUrl() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+    .replace(/[xy]/g, c => {
+      // tslint:disable-next-line:no-magic-numbers
+      let r = (Math.random() * 16) | 0
+      let v = c === 'x' ? r : (r & 0x3) | 0x8
+
+      return v.toString(16)
+    })
+    .toUpperCase()
+}
+
+/**
+ * 生成唯一的字符串
+ * @return str{string}
+ */
+export function genUniqStr() {
+  return (
+    Math.random()
+      .toString(36)
+      .substring(7) + Date.now().toString(16)
+  )
+}
