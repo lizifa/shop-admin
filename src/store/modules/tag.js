@@ -10,6 +10,7 @@ export default {
   },
   mutations: {
     COMMIT_TAG(state, data) {
+      console.log(1)
       let existed = state.visitedRoutes.find(v => v.path === data.path)
       !existed && state.visitedRoutes.push(data)
     },

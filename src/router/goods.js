@@ -21,9 +21,7 @@ export default {
         active: false
       },
       component: () =>
-        import(
-          /* webpackChunkName: "goodsindex" */ '@/pages/dashboard/index.vue'
-        )
+        import(/* webpackChunkName: "goodsindex" */ '@/pages/goods/page1.vue')
     },
     {
       path: '/goods/swiper',
@@ -34,9 +32,7 @@ export default {
         active: false
       },
       component: () =>
-        import(
-          /* webpackChunkName: "goodsindex" */ '@/pages/dashboard/index.vue'
-        )
+        import(/* webpackChunkName: "goodsindex" */ '@/pages/goods/page1.vue')
     },
     {
       path: '/goods/hot',
@@ -47,9 +43,7 @@ export default {
         active: false
       },
       component: () =>
-        import(
-          /* webpackChunkName: "goodsindex" */ '@/pages/dashboard/index.vue'
-        )
+        import(/* webpackChunkName: "goodsindex" */ '@/pages/goods/page1.vue')
     },
     {
       path: '/goods/new',
@@ -60,9 +54,7 @@ export default {
         active: false
       },
       component: () =>
-        import(
-          /* webpackChunkName: "goodsindex" */ '@/pages/dashboard/index.vue'
-        )
+        import(/* webpackChunkName: "goodsindex" */ '@/pages/goods/page1.vue')
     },
     {
       path: '/goods/recommend',
@@ -73,9 +65,7 @@ export default {
         active: false
       },
       component: () =>
-        import(
-          /* webpackChunkName: "goodsindex" */ '@/pages/dashboard/index.vue'
-        )
+        import(/* webpackChunkName: "goodsindex" */ '@/pages/goods/page1.vue')
     }
   ]
 }

@@ -354,6 +354,8 @@ export default {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    background: @bgColor;
     .breadcrumb {
       display: flex;
       align-items: center;
@@ -408,13 +410,15 @@ export default {
     }
     .content-main {
       flex-grow: 1;
-      background: #f0f2f5;
       overflow: hidden;
       position: relative;
+      height: calc(100vh - 107px);
+      margin-top: 15px;
     }
     .content-header {
       overflow: hidden;
       box-sizing: border-box;
+      background: #fff;
     }
   }
   .page-sidebar-expanded {
