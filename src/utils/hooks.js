@@ -46,15 +46,3 @@ export const useRect = elementRef => {
     height: 0
   }
 }
-
-export function useCollapse(bool) {
-  let isCollapse = ref(bool)
-  let setCollapse = function(newVal) {
-    isCollapse.value = newVal
-    localStorage.setItem(
-      'collapse',
-      JSON.stringify({ collapse: isCollapse.value })
-    )
-  }
-  return [isCollapse, setCollapse]
-}

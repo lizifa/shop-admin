@@ -1,9 +1,10 @@
 import { localGet } from '@/utils'
 
 export default {
-  state: () => ({
+  namespaced: true,
+  state: {
     token: localGet('token')
-  }),
+  },
   mutations: {},
   actions: {},
   getters: {}

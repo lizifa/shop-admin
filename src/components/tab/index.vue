@@ -31,13 +31,13 @@ export default {
     let router = useRouter()
     let store = useStore()
     let route = useRoute()
-    let visitedRoutes = computed(() => store.getters.visitedRoutes)
+    let visitedRoutes = computed(() => store.state.tag.visitedRoutes)
 
     let onTabClick = data => {
       router.push({ path: data.path })
     }
     let onTabClose = data => {
-      store.commit('DELETE_TAG', data)
+      store.commit('tag/DELETE_TAG', data)
       let item = visitedRoutes.value[visitedRoutes.value.length - 1]
       router.push({ path: item.path })
     }

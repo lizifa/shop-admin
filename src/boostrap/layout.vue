@@ -1,72 +1,6 @@
 <template>
   <div id="layout">
-    <div
-      :class="[
-        `sidebar-wrapper ${
-          isCollapse ? 'page-sidebar-expanded' : 'page-sidebar-collapsed'
-        }`
-      ]"
-    >
-      <ul class="top-menu">
-        <li
-          v-for="(item, index) in menus.list"
-          :key="index"
-          @click="routeJump(item)"
-          :class="{ active: route.fullPath.includes(item.meta.name) }"
-        >
-          <i class="el-icon-chat-line-round" data="el-icon"></i>
-          {{ item.meta.title }}
-        </li>
-      </ul>
-      <ul class="second-menu">
-        <li
-          v-for="(item, index) in routes.list"
-          :key="index"
-          :class="{
-            active: route.path === item.path && !item.children
-          }"
-        >
-          <template v-if="!item.children">
-            <div class="next-title" @click="routeJump(item)">
-              <i class="el-icon-chat-line-round" data="el-icon"></i>
-              {{ item.meta.title }}
-              <i
-                class="el-icon-arrow-down"
-                v-if="item.children && item.children.length > 0"
-              ></i>
-            </div>
-          </template>
-          <template v-else>
-            <div class="next-title" @click="toggleMenu(item, $event)">
-              <i class="el-icon-chat-line-round" data="el-icon"></i>
-              {{ item.meta.title }}
-              <i
-                :class="[
-                  `el-icon-arrow-down ${item.meta.active ? 'rotate' : ''}`
-                ]"
-                v-if="item.children && item.children.length > 0"
-              ></i>
-            </div>
-            <ol
-              :class="[`third-menu ${item.meta.active ? 'active' : ''}`]"
-              v-if="item.children && item.children.length > 0"
-            >
-              <li
-                v-for="(item, index) in item.children"
-                :key="index"
-                @click="routeJump(item)"
-                :class="{
-                  active: route.path.includes(item.path)
-                }"
-              >
-                <i class="el-icon-chat-line-round" data="el-icon"></i
-                >{{ item.meta.title }}
-              </li>
-            </ol>
-          </template>
-        </li>
-      </ul>
-    </div>
+    <AsiderComponent />
     <div class="content-wrapper">
       <div class="content-header">
         <div class="navigation">
@@ -130,40 +64,30 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted, watch, readonly } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { getChildRouter, getCurRouter } from '@/utils'
+import { ref, reactive, onMounted, readonly, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import tabComponent from '@/components/tab'
-import { useCollapse } from '@/utils/hooks'
 import { useStore } from 'vuex'
 import { DROPDOWNLIST } from '@/utils/constant'
-import { localRemove } from '@/utils'
+import { getAsiderCollapseStatus, localSet, localRemove } from '@/utils'
+import AsiderComponent from './asider'
 
 export default {
   name: 'layout',
   components: {
-    tabComponent
+    tabComponent,
+    AsiderComponent
   },
   setup() {
     let store = useStore()
-    let [isCollapse, setCollapse] = useCollapse(true)
+    let isCollapse = computed(() => store.state.navigation.isCollapse)
     let toggle = () => {
-      setCollapse(!isCollapse.value)
+      localSet('collapse', JSON.stringify({ collapse: !isCollapse.value }))
+      store.commit('navigation/UPDATE_COLLAPSE_STATUS')
     }
 
     let router = useRouter()
-    let routes = reactive({
-      list: getChildRouter(router)
-    })
-    let menus = reactive({
-      list: getCurRouter(router)
-    })
-    let routeJump = item => {
-      router.push({ path: item.path })
-    }
-    let toggleMenu = item => {
-      item.meta.active = !item.meta.active
-    }
+
     let drawer = ref(false)
     let direction = ref('rtl')
     let openDrawer = () => {
@@ -172,17 +96,6 @@ export default {
     let handleClose = done => {
       done()
     }
-
-    let route = useRoute()
-    watch(
-      () => route.path,
-      () => {
-        let pathArr = router.currentRoute.value.path.split('/')
-        let item = menus.list.find(v => v.path === '/' + pathArr[1])
-        item && item.children && (routes.list = item.children)
-        store.commit('COMMIT_TAG', router.currentRoute.value)
-      }
-    )
 
     let command = command => {
       switch (command) {
@@ -196,42 +109,37 @@ export default {
 
     let dropdownList = readonly(reactive(DROPDOWNLIST))
     onMounted(() => {
-      let cache = localStorage.getItem('collapse')
-      if (cache) {
-        cache = JSON.parse(localStorage.getItem('collapse'))
-        isCollapse.value = cache.collapse
-      }
-      store.commit('COMMIT_TAG', router.currentRoute.value)
+      isCollapse.value = getAsiderCollapseStatus()
+      store.commit('tag/COMMIT_TAG', router.currentRoute.value)
     })
 
     return {
       isCollapse,
       toggle,
-      menus,
-      routeJump,
-      routes,
       drawer,
       direction,
       handleClose,
       openDrawer,
-      route,
-      toggleMenu,
       command,
       dropdownList
     }
   }
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 #layout {
   display: flex;
   width: 100%;
   color: @black;
   .sidebar-wrapper {
     transition: all ease 0.2s;
-    overflow: hidden;
-    display: flex;
-    flex-direction: inherit;
+    > div {
+      overflow: hidden;
+      display: flex;
+      flex-direction: inherit;
+      width: 300px;
+      overflow: hidden;
+    }
   }
   .top-menu {
     height: 100vh;
@@ -241,6 +149,9 @@ export default {
     padding: 0;
     flex-basis: @fix-bar-width;
     min-width: @fix-bar-width;
+    position: fixed;
+    left: 0;
+    top: 0;
     li {
       width: 100%;
       height: @fix-bar-width;
@@ -273,6 +184,7 @@ export default {
     margin: 0;
     list-style: none;
     padding: 0;
+    padding-left: @fix-bar-width;
     li {
       cursor: pointer;
       font-size: 14px;
@@ -443,6 +355,7 @@ export default {
   }
   .page-sidebar-collapsed {
     width: @fix-bar-width;
+    overflow: hidden;
   }
   .el-dropdown-link {
     display: flex;

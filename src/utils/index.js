@@ -140,3 +140,13 @@ export function genUniqStr() {
       .substring(7) + Date.now().toString(16)
   )
 }
+
+export function getAsiderCollapseStatus() {
+  let cache = localGet('collapse')
+  let isCollapse = true
+  if (cache) {
+    cache = JSON.parse(cache)
+    isCollapse = cache.collapse
+  }
+  return isCollapse
+}

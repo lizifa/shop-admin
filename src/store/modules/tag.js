@@ -2,12 +2,11 @@ import { routes } from '@/router/routes'
 let HomeEntry = routes.find(v => v.path === '/dashboard').children[0]
 
 export default {
+  namespaced: true,
   state: {
     visitedRoutes: [HomeEntry]
   },
-  getters: {
-    visitedRoutes: state => state.visitedRoutes
-  },
+  getters: {},
   mutations: {
     COMMIT_TAG(state, data) {
       let existed = state.visitedRoutes.find(v => v.path === data.path)
