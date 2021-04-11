@@ -55,11 +55,11 @@ export default {
 .my-tab {
   .el-tag {
     mask: url('~@/assets/images/tab.png');
-    mask-size: 100% 100%;
+    mask-size: 100% 110%;
     border: none;
     cursor: pointer;
     background: transparent;
-    transition: all ease 0.4s;
+    transition: @transition;
     &:hover {
       background: #dee1e6;
       padding: 0 30px 0 30px;

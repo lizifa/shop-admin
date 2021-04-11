@@ -53,10 +53,12 @@
 import { reactive, ref, unref } from 'vue'
 import { useRouter } from 'vue-router'
 import { localSet } from '@/utils'
+import { useStore } from 'vuex'
 
 export default {
   name: 'login',
   setup() {
+    let store = useStore()
     let router = useRouter()
     let loginRef = ref()
     let ruleForm = reactive({
@@ -67,17 +69,14 @@ export default {
     let submitForm = () => {
       let { query } = router.currentRoute.value
       let { validate } = unref(loginRef)
-      validate(valid => {
-        if (valid) {
-          localSet('token', ruleForm.userName)
-          router.replace({
-            path: query.redirect ? decodeURIComponent(query.redirect) : '/'
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+      let next = () => {
+        let token = ruleForm.userName
+        localSet('token', token)
+        store.commit('auth/LOGIN', token)
+        let jumpUrl = query.redirect ? decodeURIComponent(query.redirect) : '/'
+        location.href = jumpUrl
+      }
+      validate(valid => valid && next())
     }
 
     return {

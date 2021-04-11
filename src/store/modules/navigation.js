@@ -1,4 +1,4 @@
-import { getCurRouter, getAsiderCollapseStatus } from '@/utils'
+import { getCurRouter, getCollapseStatus } from '@/utils'
 
 export default {
   namespaced: true,
@@ -6,11 +6,12 @@ export default {
     asider: {
       list: getCurRouter()
     },
-    isCollapse: getAsiderCollapseStatus()
+    isCollapse: getCollapseStatus()
   },
   mutations: {
     UPDATE_COLLAPSE_STATUS(state) {
-      state.isCollapse = getAsiderCollapseStatus()
+      state.isCollapse = getCollapseStatus()
+      console.log(state, 'store')
     }
   },
   actions: {},

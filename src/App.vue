@@ -10,8 +10,12 @@ export default {
     let router = useRouter()
     onMounted(() => {
       window.addEventListener('storage', ({ key }) => {
-        if (key === 'LOGOUT') {
-          router.replace({ path: '/login' })
+        switch (key) {
+          case 'LOGOUT':
+            router.replace({ path: '/login' })
+            break
+          default:
+            break
         }
       })
     })

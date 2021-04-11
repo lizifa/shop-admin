@@ -5,7 +5,11 @@ export default {
   state: {
     token: localGet('token')
   },
-  mutations: {},
+  mutations: {
+    LOGIN(state, token) {
+      state.token = token
+    }
+  },
   actions: {},
   getters: {}
 }

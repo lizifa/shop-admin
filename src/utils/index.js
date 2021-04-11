@@ -141,11 +141,11 @@ export function genUniqStr() {
   )
 }
 
-export function getAsiderCollapseStatus() {
+export function getCollapseStatus() {
   let cache = localGet('collapse')
   let isCollapse = true
   if (cache) {
-    cache = JSON.parse(cache)
+    cache = typeof cache === 'string' ? JSON.parse(cache) : cache
     isCollapse = cache.collapse
   }
   return isCollapse

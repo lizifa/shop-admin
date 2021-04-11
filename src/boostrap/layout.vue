@@ -69,7 +69,7 @@ import { useRouter } from 'vue-router'
 import tabComponent from '@/components/tab'
 import { useStore } from 'vuex'
 import { DROPDOWNLIST } from '@/utils/constant'
-import { getAsiderCollapseStatus, localSet, localRemove } from '@/utils'
+import { getCollapseStatus, localSet, localRemove } from '@/utils'
 import AsiderComponent from './asider'
 
 export default {
@@ -82,8 +82,10 @@ export default {
     let store = useStore()
     let isCollapse = computed(() => store.state.navigation.isCollapse)
     let toggle = () => {
-      localSet('collapse', JSON.stringify({ collapse: !isCollapse.value }))
+      let temp = { collapse: !isCollapse.value }
+      localSet('collapse', JSON.stringify(temp))
       store.commit('navigation/UPDATE_COLLAPSE_STATUS')
+      console.log(isCollapse, 'layout')
     }
 
     let router = useRouter()
@@ -109,7 +111,7 @@ export default {
 
     let dropdownList = readonly(reactive(DROPDOWNLIST))
     onMounted(() => {
-      isCollapse.value = getAsiderCollapseStatus()
+      isCollapse.value = getCollapseStatus()
       store.commit('tag/COMMIT_TAG', router.currentRoute.value)
     })
 
