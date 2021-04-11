@@ -34,7 +34,7 @@ export default {
     let visitedRoutes = computed(() => store.state.tag.visitedRoutes)
 
     let onTabClick = data => {
-      router.push({ path: data.path })
+      router.push({ path: data.path, query: data.query })
     }
     let onTabClose = data => {
       store.commit('tag/DELETE_TAG', data)

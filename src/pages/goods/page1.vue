@@ -4,7 +4,7 @@
       :model="goodForm"
       :rules="rules"
       ref="goodRef"
-      label-width="100px"
+      label-width="auto"
       class="goodForm"
     >
       <el-form-item required label="商品分类">
@@ -121,7 +121,7 @@ export default {
     const route = useRoute()
     const { id } = route.query
     const state = reactive({
-      aaa: '',
+      uploadImgServer: '',
       token: localGet('token') || '',
       id: id,
       defaultCate: '',

@@ -27,7 +27,11 @@
           }"
         >
           <template v-if="!item.children">
-            <div class="next-title" @click="routeJump(item)">
+            <div
+              class="next-title"
+              @click="routeJump(item)"
+              style="cursor: pointer"
+            >
               <i class="el-icon-chat-line-round" data="el-icon"></i>
               {{ item.meta.title }}
               <i
@@ -92,9 +96,6 @@ export default {
     let routeJump = item => {
       router.push({ path: item.path })
     }
-    // let toggleMenu = item => {
-    //   item.meta.active = !item.meta.active
-    // }
 
     let route = useRoute()
     watch(
@@ -113,7 +114,6 @@ export default {
       routeJump,
       routes,
       route
-      // toggleMenu
     }
   }
 }

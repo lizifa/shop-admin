@@ -130,9 +130,8 @@ export default {
 #layout {
   display: flex;
   width: 100%;
-  color: @black;
   .sidebar-wrapper {
-    transition: all ease 0.2s;
+    transition: @transition;
     > div {
       overflow: hidden;
       display: flex;
@@ -186,9 +185,9 @@ export default {
     padding: 0;
     padding-left: @fix-bar-width;
     li {
-      cursor: pointer;
+      // cursor: pointer;
       font-size: 14px;
-      transition: all ease 0.4s;
+      transition: @transition;
       display: flex;
       flex-direction: column;
       > .next-title {
@@ -209,7 +208,7 @@ export default {
           display: inline-flex;
           justify-content: center;
           align-items: center;
-          transition: all ease 0.4s;
+          transition: @transition;
         }
         .rotate {
           transform: rotate(180deg);
@@ -243,7 +242,7 @@ export default {
     list-style: none;
     padding: 0;
     background: #fff;
-    transition: all ease 0.1s;
+    transition: @transition;
     transform-origin: 0% 0%;
     max-height: unset;
     &.active {
@@ -252,7 +251,7 @@ export default {
     li {
       cursor: pointer;
       font-size: 14px;
-      transition: all ease 0.4s;
+      transition: @transition;
       display: flex;
       height: 50px;
       display: flex;
@@ -260,8 +259,7 @@ export default {
       justify-content: flex-start;
       padding: 0 10px;
       flex-direction: unset;
-      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), border 0s,
-        color 0.1s, font-size 0s;
+      transition: @transition, color 0.1s, font-size 0s;
       &.active {
         background: rgba(24, 144, 255, 0.1) !important;
         cursor: pointer;
@@ -283,7 +281,6 @@ export default {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    width: 100%;
     background: @bgColor;
     .breadcrumb {
       display: flex;
