@@ -1,4 +1,3 @@
-import { routes } from '../router/routes'
 /**
  * 获取当前路由的子路由
  * @param {*} router对象
@@ -6,10 +5,6 @@ import { routes } from '../router/routes'
  */
 export function getChildRouter(router) {
   return router.currentRoute.value.matched[0].children.slice()
-}
-
-export function getCurRouter() {
-  return routes.filter(v => v.meta && v.meta.topMenu)
 }
 
 export const hasClass = function(obj, cls) {

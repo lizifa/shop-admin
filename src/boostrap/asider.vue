@@ -9,7 +9,7 @@
     <div>
       <ul class="top-menu">
         <li
-          v-for="(item, index) in menus.list"
+          v-for="(item, index) in list"
           :key="index"
           @click="routeJump(item)"
           :class="{ active: route.fullPath.includes(item.meta.name) }"
@@ -77,21 +77,19 @@
 <script>
 import { reactive, watch, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getChildRouter, getCurRouter } from '@/utils'
+import { getChildRouter } from '@/utils'
 import { useStore } from 'vuex'
-
+import { useBar } from '@/utils/hooks'
 export default {
   name: 'asider',
   setup() {
+    let list = useBar()
     let store = useStore()
     let isCollapse = computed(() => store.state.navigation.isCollapse)
 
     let router = useRouter()
     let routes = reactive({
       list: getChildRouter(router)
-    })
-    let menus = reactive({
-      list: getCurRouter(router)
     })
     let routeJump = item => {
       router.push({ path: item.path })
@@ -102,7 +100,7 @@ export default {
       () => route.path,
       () => {
         let pathArr = router.currentRoute.value.path.split('/')
-        let item = menus.list.find(v => v.path === '/' + pathArr[1])
+        let item = list.find(v => v.path === '/' + pathArr[1])
         item && item.children && (routes.list = item.children)
         store.commit('tag/COMMIT_TAG', router.currentRoute.value)
       }
@@ -110,10 +108,10 @@ export default {
 
     return {
       isCollapse,
-      menus,
       routeJump,
       routes,
-      route
+      route,
+      list
     }
   }
 }

@@ -1,5 +1,5 @@
 import dashboard from './dashboard'
-import component from './component'
+// import component from './component'
 import config from './config'
 import goods from './goods'
 
@@ -10,7 +10,7 @@ export const routes = [
   },
   dashboard,
   goods,
-  component,
+  // component,
   config,
   {
     path: '/login',

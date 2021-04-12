@@ -1,4 +1,5 @@
-import { ref } from 'vue'
+import { unref } from 'vue'
+import { routes } from '../router/routes'
 
 /**
   获取元素的大小及其相对于视口的位置，等价于 Element.getBoundingClientRect。
@@ -9,8 +10,6 @@ import { ref } from 'vue'
   right	右侧与视图窗口左上角的距离	number
   bottom	底部与视图窗口左上角的距离	number
  */
-
-import { unref } from 'vue'
 
 function isWindow(val) {
   return val === window
@@ -45,4 +44,8 @@ export const useRect = elementRef => {
     width: 0,
     height: 0
   }
+}
+
+export function useBar() {
+  return routes.filter(v => v.meta && v.meta.topMenu)
 }
