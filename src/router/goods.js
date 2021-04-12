@@ -16,18 +16,18 @@ export default {
       path: '/goods/index',
       meta: {
         reddot: true,
-        title: '商品管理',
+        title: '列表',
         icon: '',
         active: false
       },
       component: () =>
-        import(/* webpackChunkName: "goodsindex" */ '@/pages/goods/page2.vue')
+        import(/* webpackChunkName: "goodsindex" */ '@/pages/goods/page3.vue')
     },
     {
       path: '/goods/swiper',
       meta: {
         reddot: true,
-        title: '轮播图配置',
+        title: '表单',
         icon: '',
         active: false
       },

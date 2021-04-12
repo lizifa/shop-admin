@@ -341,7 +341,6 @@ export default {
       overflow: hidden;
       position: relative;
       height: calc(100vh - 107px);
-      margin-top: 15px;
     }
     .content-header {
       overflow: hidden;
