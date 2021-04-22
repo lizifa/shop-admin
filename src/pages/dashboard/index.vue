@@ -1,49 +1,137 @@
 <template>
-  <div>
-    <el-carousel height="150px;" width="400px">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <h3 class="small">{{ item }}</h3>
-      </el-carousel-item>
-    </el-carousel>
-    {{ href }}
+  <div id="dashboard">
+    <el-row :gutter="15" class="section">
+      <el-col :span="4"
+        ><div class="item">
+          <div><i class="el-icon-eleme"></i></div>
+          <div>
+            <div class="number">9120</div>
+            <span>总访问次数</span>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="4"
+        ><div class="item">
+          <div><i class="el-icon-eleme"></i></div>
+          <div>
+            <div class="number">9120</div>
+            <span>在线访客数</span>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="4"
+        ><div class="item">
+          <div><i class="el-icon-eleme"></i></div>
+          <div>
+            <div class="number">9120</div>
+            <span>点击量</span>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="4"
+        ><div class="item">
+          <div><i class="el-icon-eleme"></i></div>
+          <div>
+            <div class="number">9120</div>
+            <span>文章数</span>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="4"
+        ><div class="item">
+          <div><i class="el-icon-eleme"></i></div>
+          <div>
+            <div class="number">9120</div>
+            <span>留言数</span>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="4"
+        ><div class="item">
+          <div><i class="el-icon-eleme"></i></div>
+          <div>
+            <div class="number">9120</div>
+            <span>待办任务</span>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
+    <el-row class="section section-canvas">
+      <el-col :span="12"><div id="main"></div></el-col>
+      <el-col :span="12">
+        <el-table :data="tableData" style="width: 100%">
+          <el-table-column prop="target" label="目标" width="180" />
+          <el-table-column prop="progress" label="进度">
+            <template #default="scope"
+              ><el-progress :percentage="scope.row.progress"></el-progress
+            ></template>
+          </el-table-column>
+          <el-table-column prop="startTime" label="开始时间" width="180" />
+          <el-table-column prop="endTime" label="结束时间" width="180" />
+        </el-table>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-import { watch, ref } from 'vue'
-import { useRoute } from 'vue-router'
-
+import { onMounted, nextTick } from 'vue'
+import * as echarts from 'echarts'
+import { OPTIONS1, TABLEDATE } from '@/utils/constant'
 export default {
   name: 'VabTabs',
   setup() {
-    let href = ref(location.href)
-    let route = useRoute()
-    watch(
-      () => route.path,
-      () => {
-        href.value = location.href
-      }
-    )
+    let useEchart = () => {
+      let chartDom = document.getElementById('main')
+      echarts.init(chartDom).setOption(OPTIONS1)
+    }
+    let tableData = TABLEDATE
+    onMounted(() => {
+      nextTick(() => useEchart())
+    })
     return {
-      href
+      tableData
     }
   }
 }
 </script>
-<style>
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 14px;
-  opacity: 0.75;
-  line-height: 150px;
-  margin: 0;
-}
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
+<style lang="less" scoped>
+#dashboard {
+  box-sizing: border-box;
+  margin: 15px;
+  border-radius: 4px;
+  .item {
+    height: 125px;
+    background: #fff;
+    border-radius: 4px;
+    display: inline-flex;
+    width: 100%;
+    box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 15px;
+    align-items: center;
+    justify-content: space-between;
+    i {
+      font-size: 50px;
+    }
+    span {
+      color: #999;
+      font-size: 12px;
+    }
+    .number {
+      color: #515a6e;
+      font-size: 30px;
+    }
+  }
+  .section-canvas {
+    margin-top: 15px;
+    box-sizing: border-box;
+    padding: 15px;
+    background: #fff;
+    #main {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 </style>

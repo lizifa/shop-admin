@@ -85,7 +85,6 @@ export default {
       let temp = { collapse: !isCollapse.value }
       localSet('collapse', JSON.stringify(temp))
       store.commit('navigation/UPDATE_COLLAPSE_STATUS')
-      console.log(isCollapse, 'layout')
     }
 
     let router = useRouter()
