@@ -56,19 +56,23 @@
         </div>
       </el-col>
     </el-row>
-    <el-row class="section section-canvas">
-      <el-col :span="12"><div id="main"></div></el-col>
+    <el-row class="section section-canvas" :gutter="15">
+      <el-col :span="12"
+        ><div class="echart-box"><div id="main"></div></div
+      ></el-col>
       <el-col :span="12">
-        <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="target" label="目标" width="180" />
-          <el-table-column prop="progress" label="进度">
-            <template #default="scope"
-              ><el-progress :percentage="scope.row.progress"></el-progress
-            ></template>
-          </el-table-column>
-          <el-table-column prop="startTime" label="开始时间" width="180" />
-          <el-table-column prop="endTime" label="结束时间" width="180" />
-        </el-table>
+        <div class="table-box">
+          <el-table :data="tableData" style="width: 100%">
+            <el-table-column prop="target" label="目标" width="180" />
+            <el-table-column prop="progress" label="进度">
+              <template #default="scope"
+                ><el-progress :percentage="scope.row.progress"></el-progress
+              ></template>
+            </el-table-column>
+            <el-table-column prop="startTime" label="开始时间" width="180" />
+            <el-table-column prop="endTime" label="结束时间" width="180" />
+          </el-table>
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -125,9 +129,21 @@ export default {
   }
   .section-canvas {
     margin-top: 15px;
-    box-sizing: border-box;
-    padding: 15px;
-    background: #fff;
+    overflow: hidden;
+    .echart-box {
+      width: 100%;
+      height: 100%;
+      padding: 15px;
+      box-sizing: border-box;
+      background: #fff;
+    }
+    .table-box {
+      width: 100%;
+      background: #fff;
+      height: 100%;
+      padding: 15px;
+      box-sizing: border-box;
+    }
     #main {
       width: 100%;
       height: 100%;

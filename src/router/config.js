@@ -89,6 +89,17 @@ export default {
         import(
           /* webpackChunkName: "configlog" */ '@/pages/dashboard/index.vue'
         )
+    },
+    {
+      path: '/config/auth',
+      meta: {
+        reddot: true,
+        title: '权限配置',
+        icon: '',
+        active: false
+      },
+      component: () =>
+        import(/* webpackChunkName: "configAuth" */ '@/pages/config/auth.vue')
     }
   ]
 }
