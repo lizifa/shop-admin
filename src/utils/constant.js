@@ -179,3 +179,42 @@ export const TABLE_DATA = [
     address: '上海市普陀区金沙江路 1516 弄'
   }
 ]
+
+export const TAB_CONFIG = [
+  {
+    icon: 'el-icon-info',
+    text: '访问总次数',
+    count: '9120',
+    color: '#409EFF'
+  },
+  {
+    icon: 'el-icon-info',
+    text: '在线访客数',
+    count: '9120',
+    color: '#ffc069'
+  },
+  {
+    icon: 'el-icon-info',
+    text: '点击量',
+    count: '9120',
+    color: '#95de64'
+  },
+  {
+    icon: 'el-icon-info',
+    text: '文章数',
+    count: '9120',
+    color: '#b7cbe2'
+  },
+  {
+    icon: 'el-icon-info',
+    text: '留言数',
+    count: '9120',
+    color: '#f2b985'
+  },
+  {
+    icon: 'el-icon-info',
+    text: '代办数',
+    count: '9120',
+    color: '#f5b7ce'
+  }
+]

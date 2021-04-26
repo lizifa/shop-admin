@@ -1,6 +1,6 @@
 <template>
   <div class="config-auth">
-    <div>
+    <div class="action-zone">
       <el-button type="primary" size="mini" @click="handleOpen">新建</el-button>
     </div>
     <el-table
@@ -109,6 +109,9 @@ export default {
   }
   .delete-icon {
     color: @warning;
+  }
+  .action-zone {
+    margin-bottom: 15px;
   }
 }
 </style>

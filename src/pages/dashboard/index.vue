@@ -1,57 +1,12 @@
 <template>
   <div id="dashboard">
     <el-row :gutter="15" class="section">
-      <el-col :span="4"
+      <el-col :span="4" v-for="(item, index) in tabs" :key="index"
         ><div class="item">
-          <div><i class="el-icon-eleme"></i></div>
+          <div><i :class="item.icon" :style="{ color: item.color }"></i></div>
           <div>
-            <div class="number">9120</div>
-            <span>总访问次数</span>
-          </div>
-        </div>
-      </el-col>
-      <el-col :span="4"
-        ><div class="item">
-          <div><i class="el-icon-eleme"></i></div>
-          <div>
-            <div class="number">9120</div>
-            <span>在线访客数</span>
-          </div>
-        </div>
-      </el-col>
-      <el-col :span="4"
-        ><div class="item">
-          <div><i class="el-icon-eleme"></i></div>
-          <div>
-            <div class="number">9120</div>
-            <span>点击量</span>
-          </div>
-        </div>
-      </el-col>
-      <el-col :span="4"
-        ><div class="item">
-          <div><i class="el-icon-eleme"></i></div>
-          <div>
-            <div class="number">9120</div>
-            <span>文章数</span>
-          </div>
-        </div>
-      </el-col>
-      <el-col :span="4"
-        ><div class="item">
-          <div><i class="el-icon-eleme"></i></div>
-          <div>
-            <div class="number">9120</div>
-            <span>留言数</span>
-          </div>
-        </div>
-      </el-col>
-      <el-col :span="4"
-        ><div class="item">
-          <div><i class="el-icon-eleme"></i></div>
-          <div>
-            <div class="number">9120</div>
-            <span>待办任务</span>
+            <div class="number">{{ item.count }}</div>
+            <span>{{ item.text }}</span>
           </div>
         </div>
       </el-col>
@@ -79,12 +34,14 @@
 </template>
 
 <script>
-import { onMounted, nextTick } from 'vue'
+import { onMounted, nextTick, reactive } from 'vue'
 import * as echarts from 'echarts'
 import { OPTIONS1, TABLEDATE } from '@/utils/constant'
+import { TAB_CONFIG } from '@/utils/constant'
 export default {
   name: 'VabTabs',
   setup() {
+    let tabs = reactive(TAB_CONFIG)
     let useEchart = () => {
       let chartDom = document.getElementById('main')
       echarts.init(chartDom).setOption(OPTIONS1)
@@ -94,7 +51,8 @@ export default {
       nextTick(() => useEchart())
     })
     return {
-      tableData
+      tableData,
+      tabs
     }
   }
 }
