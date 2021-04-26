@@ -3,57 +3,112 @@
     <div>
       <el-button type="primary" size="mini" @click="handleOpen">新建</el-button>
     </div>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="date" label="菜单名称"> </el-table-column>
-      <el-table-column prop="name" label="权限标志"> </el-table-column>
-      <el-table-column prop="address" label="路由"> </el-table-column>
-      <el-table-column prop="address" label="可操作权限"> </el-table-column>
-      <el-table-column prop="address" label="排序"> </el-table-column>
-      <el-table-column prop="address" label="创建日期"> </el-table-column>
-      <el-table-column prop="address" label="操作"> </el-table-column>
-    </el-table>
-    <el-dialog
-      title="提示"
-      v-model="dialogVisible"
-      width="30%"
-      :before-close="handleClose"
+    <el-table
+      :data="tableData"
+      style="width: 100%"
+      row-key="id"
+      border
+      lazy
+      :load="load"
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     >
-      <span>这是一段信息</span>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="handleOpen">取 消</el-button>
-          <el-button type="primary" @click="handleClose">确 定</el-button>
-        </span>
-      </template>
-    </el-dialog>
+      <el-table-column prop="name" label="菜单名称" width="180">
+      </el-table-column>
+      <el-table-column prop="menuMark" label="权限标志" width="180">
+      </el-table-column>
+      <el-table-column prop="MenuLink" label="路由"> </el-table-column>
+      <el-table-column prop="auth" label="可操作权限"> </el-table-column>
+      <el-table-column prop="sort" label="排序"> </el-table-column>
+      <el-table-column prop="createTime" label="创建日期"> </el-table-column>
+      <el-table-column label="操作" align="center">
+        <template #default="scope">
+          <el-button
+            type="text"
+            icon="el-icon-edit"
+            class="edit-icon"
+            @click="updateRowAction(scope.row)"
+            >编辑</el-button
+          >
+          <el-button
+            type="text"
+            class="delete-icon"
+            icon="el-icon-delete"
+            @click="deleteRowAction(scope.row)"
+            >删除</el-button
+          >
+        </template>
+      </el-table-column>
+    </el-table>
+    <dialogModel ref="refAuthDialog" />
   </div>
 </template>
 
 <script>
 import { reactive, ref } from 'vue'
 import { TABLE_DATA } from '@/utils/constant'
-
+import dialogModel from './addAuthModal'
 export default {
+  components: {
+    dialogModel
+  },
   setup() {
     let tableData = reactive(TABLE_DATA)
-    let dialogVisible = ref(dialogVisible)
-    let handleClose = () => {
-      dialogVisible.value = false
-    }
+    let refAuthDialog = ref()
+
     let handleOpen = () => {
-      dialogVisible.value = true
+      refAuthDialog.value.show()
     }
-    return { tableData, dialogVisible, handleClose, handleOpen }
+    let load = (tree, treeNode, resolve) => {
+      setTimeout(() => {
+        resolve([
+          {
+            id: 31,
+            date: '2016-05-01',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1519 弄'
+          },
+          {
+            id: 32,
+            date: '2016-05-01',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1519 弄'
+          }
+        ])
+      }, 1000)
+    }
+
+    let updateRowAction = row => {
+      console.log(row)
+    }
+
+    let deleteRowAction = row => {
+      console.log(row)
+    }
+
+    return {
+      tableData,
+      refAuthDialog,
+      handleOpen,
+      load,
+      updateRowAction,
+      deleteRowAction
+    }
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .config-auth {
   margin: 15px;
   border-radius: 4px;
   box-sizing: border-box;
   background: #fff;
   padding: 15px;
+  .edit-icon {
+    color: @primary;
+  }
+  .delete-icon {
+    color: @warning;
+  }
 }
 </style>
