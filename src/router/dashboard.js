@@ -33,18 +33,22 @@ export default {
         icon: '',
         active: false
       },
+      component: () =>
+        import(
+          /* webpackChunkName: "dashboardexport" */ '@/pages/dashboard/table.vue'
+        ),
       children: [
         {
           path: '/dashboard/index/a',
           meta: {
             reddot: true,
-            title: '测试数据a',
+            title: '表单',
             icon: '',
             active: false
           },
           component: () =>
             import(
-              /* webpackChunkName: "dashboardindex" */ '@/pages/dashboard/index.vue'
+              /* webpackChunkName: "dashboardTable" */ '@/pages/dashboard/table.vue'
             )
         },
         {
@@ -60,11 +64,7 @@ export default {
               /* webpackChunkName: "dashboardindex" */ '@/pages/dashboard/index.vue'
             )
         }
-      ],
-      component: () =>
-        import(
-          /* webpackChunkName: "dashboardexport" */ '@/pages/dashboard/index.vue'
-        )
+      ]
     }
   ]
 }

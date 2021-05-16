@@ -86,9 +86,7 @@ export default {
         active: false
       },
       component: () =>
-        import(
-          /* webpackChunkName: "configlog" */ '@/pages/dashboard/index.vue'
-        )
+        import(/* webpackChunkName: "configlog" */ '@/pages/config/test.vue')
     },
     {
       path: '/config/auth',
