@@ -6,6 +6,8 @@
       node-key="id"
       :props="defaultProps"
       ref="treeRef"
+      :check-strictly="false"
+      default-expand-all
     >
     </el-tree>
     <div><el-button type="text" @click="onClick">click</el-button></div>
@@ -40,6 +42,7 @@ export default {
       {
         id: 2,
         label: '一级 2',
+        disabled: true,
         children: [
           {
             id: 5,
@@ -54,6 +57,7 @@ export default {
       {
         id: 3,
         label: '一级 3',
+        disabled: true,
         children: [
           {
             id: 7,
